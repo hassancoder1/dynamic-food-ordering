@@ -622,7 +622,7 @@ body::-webkit-scrollbar-thumb {
   border: 3px solid rgba(var(--theme-color), 1);
 }
 body.noice-background {
-  background: url("../images/noice.jpg") !important;
+  background: url("../images/noice.jpg");
 }
 body.noice-background::before {
   content: "";
@@ -16742,7 +16742,7 @@ width:max-content; border-radius:20px;margin:20px 0 0 0;
   color: rgba(var(--white), 1);
 }
 body.dark.noice-background {
-  background: rgba(var(--white), 1) !important;
+  background: rgba(var(--white), 1);
 }
 body.dark.noice-background::before {
   background-color: #3c3c3c;

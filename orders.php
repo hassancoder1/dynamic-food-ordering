@@ -1,4 +1,9 @@
 <?php include 'header.php'; ?>
+<style>
+    body {
+        background-color: #212521 !important;
+    }
+</style>
 
 <!-- Orders section -->
 <div class="product-details-content m-auto p-5" id="orders-section" style="max-width: 600px;">
@@ -16,7 +21,108 @@
         </div>
     </div>
 </div>
-
+<div class="container table-responsive">
+    <!-- <table class="table table-striped table-hover table-dark m-auto" style="max-width:600px;">
+        <thead>
+            <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Items</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>#00a7c9a3</td>
+                <td>Apr-22-2024</td>
+                <td>23</td>
+                <td>$234</td>
+                <td><span class="badge rounded-pill text-bg-success">Delivered</span></td>
+            </tr>
+            <tr>
+                <td>#00a7c9a3</td>
+                <td>Apr-22-2024</td>
+                <td>23</td>
+                <td>$234</td>
+                <td><span class="badge rounded-pill text-bg-danger">Deleted</span></td>
+            </tr>
+            <tr>
+                <td>#00a7c9a3</td>
+                <td>Apr-22-2024</td>
+                <td>23</td>
+                <td>$234</td>
+                <td><span class="badge rounded-pill text-bg-warning">Pending</span></td>
+            </tr>
+        </tbody>
+    </table> -->
+    <table class="table align-middle m-auto table-dark" style="max-width:600px;">
+        <thead class="bg-light">
+            <tr>
+                <th>Info</th>
+                <th class="col-1">Quantity</th>
+                <th class="col-1">Price</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="d-flex align-items-left justify-content-start flex-column">
+                        <div class="d-inline-flex gap-1"><img src="assets/images/product/item-1.webp" alt=""
+                                style="width: 45px; height: 45px" class="rounded-circle" />
+                            <img src="assets/images/product/item-1.webp" alt="" style="width: 45px; height: 45px"
+                                class="rounded-circle" />
+                        </div>
+                        <div>
+                            <small class="fw-bolder mb-1">ID: #00a7c9a3</small><br>
+                            <small>Apr-22-2024</small>
+                        </div>
+                    </div>
+                </td>
+                <td>34</td>
+                <td>$53</td>
+                <td><small class="badge rounded-pill text-bg-success">Delivered</small></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="d-flex align-items-left justify-content-start flex-column">
+                        <div class="d-inline-flex gap-1"><img src="assets/images/product/item-2.webp" alt=""
+                                style="width: 45px; height: 45px" class="rounded-circle" />
+                            <img src="assets/images/product/item-2.webp" alt="" style="width: 45px; height: 45px"
+                                class="rounded-circle" />
+                        </div>
+                        <div>
+                            <small class="fw-bolder mb-1">ID: #00a7c9a3</small><br>
+                            <small>Apr-22-2024</small>
+                        </div>
+                    </div>
+                </td>
+                <td>34</td>
+                <td>$53</td>
+                <td><small class="badge rounded-pill text-bg-danger">Deleted</small></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="d-flex align-items-left justify-content-start flex-column">
+                        <div class="d-inline-flex gap-1"><img src="assets/images/product/item-3.webp" alt=""
+                                style="width: 45px; height: 45px" class="rounded-circle" />
+                            <img src="assets/images/product/item-3.webp" alt="" style="width: 45px; height: 45px"
+                                class="rounded-circle" />
+                        </div>
+                        <div>
+                            <small class="fw-bolder mb-1">ID: #00a7c9a3</small><br>
+                            <small>Apr-22-2024</small>
+                        </div>
+                    </div>
+                </td>
+                <td>34</td>
+                <td>$53</td>
+                <td><small class="badge rounded-pill text-bg-warning">Pending</small></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <!-- Back to top button start  -->
 <a href="#home" id="back-to-top-btn" class="text-white btn btn-dark btn-sm cursor-pointer"
     style="position: fixed;bottom:20px;right:20px; z-index:999;"><i class="fa fa-angle-up"></i></a>
@@ -95,7 +201,7 @@
                             </div>
                         </div>
                     `;
-                    if (order.status === 'pending' || order.status === 'preparing') {
+                    if (order.status === 'preparing') {
                         orderPendingList.append(orderHTML);
                     } else {
                         orderHistoryList.append(orderHTML);
