@@ -43,7 +43,8 @@ function sanitize($data)
 function createOrdersTable($conn)
 {
     $createTableSQL = "CREATE TABLE IF NOT EXISTS orders (
-        order_id VARCHAR(36) PRIMARY KEY,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        order_id VARCHAR(36),
         order_data TEXT NOT NULL,
         total DECIMAL(10, 2) NOT NULL,
         order_status VARCHAR(20) DEFAULT 'pending',

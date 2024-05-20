@@ -6,13 +6,24 @@ header('Content-Type: application/json');
 // Main function to handle actions
 function handleAction($action, $conn)
 {
-    if ($action === 'generate_order_id') {
-        $orderID = generateUniqueOrderID($conn);
-        http_response_code(200);
-        echo json_encode(['orderID' => $orderID]);
-    } else {
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid action']);
+    switch ($action) {
+        case 'generate_order_id':
+            $orderID = generateUniqueOrderID($conn);
+            http_response_code(200);
+            echo json_encode(['orderID' => $orderID]);
+            break;
+        case 'get_order_status':
+            $orderID = $_GET['order_id'] ?? null;
+            if ($orderID) {
+                getOrderStatus($conn, $orderID);
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'Order ID is missing']);
+            }
+            break;
+        default:
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid action']);
     }
 }
 
@@ -29,6 +40,29 @@ function generateUniqueOrderID($conn)
         $orderExists = $stmt->fetchColumn() > 0;
     } while ($orderExists);
     return $orderID;
+}
+
+// Function to get the status of an order
+function getOrderStatus($conn, $orderID)
+{
+    try {
+        $stmt = $conn->prepare("SELECT order_status FROM orders WHERE order_id = :order_id");
+        $stmt->bindParam(':order_id', $orderID);
+        $stmt->execute();
+        $status = $stmt->fetchColumn();
+
+        if ($status) {
+            http_response_code(200);
+            echo json_encode(['status' => $status]);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Order not found']);
+        }
+    } catch (PDOException $e) {
+        error_log('Error fetching order status: ' . $e->getMessage());
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to fetch order status']);
+    }
 }
 
 // Check if action is specified
