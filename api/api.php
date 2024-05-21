@@ -36,21 +36,20 @@ function handleAction($action, $conn)
             break;
         case 'get_admin_component':
             $componentName = $_GET['component'] ?? "404";
-            $value1 = $_GET['value1'] ?? '';
-            $value2 = $_GET['value2'] ?? '';
-            $value3 = $_GET['value3'] ?? '';
+            $value1 = $_GET['value1'];
             http_response_code(200);
-            echo include '../admin/components/' . $componentName . '.php';
+            include '../admin/components/' . $componentName . '.php';
             break;
-        case 'do_admin_login':
-            $username = $_POST['username'] ?? "admin";
-            $password = $_POST['password'] ?? "Qw12er34ty5611$$";
+        case 'get_formatted_orders_data':
+            $page = $_GET['page'] ?? 1;
+            getFormattedOrdersData($conn, $page);
             http_response_code(200);
-            echo adminLogin($username, $password);
             break;
-        case 'get_orders_details':
-            getOrdersDetails($conn);
-            http_response_code(200);
+        case 'update_order_status':
+            $orderID = $_GET['order_id'];
+            $status = $_GET['updatedStatus'];
+            updateOrderStatus($conn, $orderID, $status);
+            // http_response_code(200);
             break;
         default:
             http_response_code(400);
@@ -173,40 +172,75 @@ function cancelOrder($conn, $orderID)
         echo json_encode(['error' => 'Failed to cancel order']);
     }
 }
-function getOrdersDetails($conn)
+function updateOrderStatus($conn, $order_id, $new_status)
 {
     try {
-        // Fetch all orders from the database
+        // Prepare the query to update order status
+        $stmt = $conn->prepare("UPDATE orders SET order_status = :new_status WHERE order_id = :order_id");
+        $stmt->bindParam(':new_status', $new_status);
+        $stmt->bindParam(':order_id', $order_id);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            http_response_code(200);
+            echo json_encode(["status" => $new_status]);
+            ;
+        } else {
+            echo "Order not found or status is already the same.";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . htmlspecialchars($e->getMessage());
+    }
+}
+function getFormattedOrdersData($conn, $page = 1, $limit = 100)
+{
+    try {
+        // Set the Content-Type header to application/json
+        header('Content-Type: application/json');
+
+        // Calculate the offset for pagination
+        $offset = (intval($page) - 1) * $limit;
+
+        // Fetch all orders to calculate totals
         $stmt = $conn->query("SELECT * FROM orders");
-        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $allOrders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Fetch paginated orders
+        $stmt = $conn->prepare("SELECT * FROM orders LIMIT :limit OFFSET :offset");
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $paginatedOrders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Initialize variables to store totals
-        $totalOrders = count($orders);
+        $totalOrders = count($allOrders);
         $totalEarnings = 0;
         $pendingOrdersCount = 0;
         $totalSales = 0;
         $formattedOrders = [];
 
-        // Loop through each order
-        foreach ($orders as $order) {
-            // Decode the order data
+        // Calculate totals using all orders
+        foreach ($allOrders as $order) {
             $orderItems = json_decode($order['order_data'], true);
-
-            // Calculate total earnings
             $totalEarnings += floatval($order['total']);
 
-            // Increment pending orders count
             if ($order['order_status'] === 'pending') {
                 $pendingOrdersCount++;
             }
 
-            // Calculate total sales and quantity per order
+            foreach ($orderItems as $item) {
+                $totalSales += $item['quantity'];
+            }
+        }
+
+        // Format paginated orders
+        foreach ($paginatedOrders as $order) {
+            $orderItems = json_decode($order['order_data'], true);
             $quantityPerOrder = 0;
             $formattedItems = [];
+
             foreach ($orderItems as $index => $item) {
                 $quantityPerOrder += $item['quantity'];
-                $totalSales += $item['quantity'];
-
                 $formattedItems[$index] = [
                     'currency' => $item['currency'],
                     'item_id' => $item['id'],
@@ -217,7 +251,6 @@ function getOrdersDetails($conn)
                 ];
             }
 
-            // Format each order
             $formattedOrders[] = [
                 'customer_name' => $order['customer_name'],
                 'order_id' => $order['order_id'],
@@ -237,7 +270,9 @@ function getOrdersDetails($conn)
             'total_earnings' => '$' . number_format($totalEarnings, 2),
             'total_sales' => $totalSales,
             'total_pending_orders' => $pendingOrdersCount,
-            'orders' => $formattedOrders
+            'orders' => $formattedOrders,
+            'current_page' => intval($page),
+            'total_pages' => ceil($totalOrders / $limit)
         ];
 
         // Return the response as JSON
@@ -253,10 +288,10 @@ function getOrdersDetails($conn)
 
 
 
+
 // Check if action is specified
 if (isset($_GET['action'])) {
     $response = handleAction($_GET['action'], DB);
-    header('Content-Type: application/json');
     echo $response;
 } else {
     http_response_code(400);

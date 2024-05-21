@@ -11,6 +11,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="./assets/js/init-alpine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -186,18 +191,15 @@
                         <li class="relative">
                             <button
                                 class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
-                                @click="toggleNotificationsMenu" @keydown.escape="closeNotificationsMenu"
-                                aria-label="Notifications" aria-haspopup="true">
-                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z">
-                                    </path>
-                                </svg>
+                                title="reload" onclick="window.location.reload()">
+                                <div class="h-full w-full flex justify-center items-center p-4"><span
+                                        class="w-6 h-6 rounded-full border-4 border-gray-700 border-t-indigo-500 "></span>
+                                </div>
                                 <!-- Notification badge -->
-                                <span aria-hidden="true"
-                                    class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"></span>
+                                <!-- <span aria-hidden="true"
+                                    class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"></span> -->
                             </button>
-                            <template x-if="isNotificationsMenuOpen">
+                            <!-- <template x-if="isNotificationsMenuOpen">
                                 <ul x-transition:leave="transition ease-in duration-150"
                                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
                                     @click.away="closeNotificationsMenu" @keydown.escape="closeNotificationsMenu"
@@ -214,8 +216,8 @@
                                     </li>
                                 </ul>
                             </template>
-                        </li>
-                        <!-- Profile menu -->
+                        </li> -->
+                            <!-- Profile menu -->
                         <li class="relative">
                             <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
                                 @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account"
@@ -265,14 +267,12 @@
                 </div>
             </header>
             <main class="h-full overflow-y-auto">
-                <div class="container px-6 mx-auto grid h-full w-full" id="content">
+                <div class="container px-6 mx-auto grid" id="content">
+
                 </div>
             </main>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function () {
             // Function to check if a cookie exists
@@ -335,10 +335,10 @@
 
                 // Determine the component to load based on the clicked button
                 const component = $(this).find('a').text().trim().toLowerCase().replace(' ', '-');
-                loadComponent(component);
+                loadComponent(component, 1);
             });
             // Load default component on page load and set default active button
-            loadComponent('dashboard');
+            loadComponent('view-order', 1);
             setActiveButton($('.sidebar-btn').first());
         });
 

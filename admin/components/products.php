@@ -2,6 +2,9 @@
 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
     Your Products
 </h4>
+<button class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300" onclick="loadComponent('edit-product')">
+    add
+</button>
 <div class="w-full overflow-hidden rounded-lg shadow-xs">
     <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
