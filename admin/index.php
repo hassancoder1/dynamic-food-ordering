@@ -8,13 +8,21 @@
     <title>Food Ordering Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="./assets/css/tailwind.output.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="./assets/js/init-alpine.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
-    <script src="./assets/js/charts-lines.js" defer></script>
-    <script src="./assets/js/charts-pie.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
+        }
+    </script>
+
 </head>
 
 <body>
@@ -26,11 +34,12 @@
                     MTC Admin
                 </a>
                 <ul class="mt-6">
-                    <li class="relative px-6 py-3">
-                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    <li class="relative px-6 py-3 sidebar-btn">
+                        <span
+                            class="active-style absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="index.html">
+                        <a href="#"
+                            class="cursor-pointer inline-flex items-center w-full text-sm font-semibold  transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -40,9 +49,13 @@
                             <span class="ml-4">Dashboard</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="forms.html">
+                    <li class="relative px-6 py-3 sidebar-btn">
+                        <span
+                            class="active-style absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                        <a href="#"
+                            class="cursor-pointer inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            id="productsButton">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -52,9 +65,13 @@
                             <span class="ml-4">Products</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="cards.html">
+                    <li class="relative px-6 py-3 sidebar-btn">
+                        <span
+                            class="active-style absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                        <a href="#"
+                            class="cursor-pointer inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            id="formDataButton">
 
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,11 +103,12 @@
                     MTC Admin
                 </a>
                 <ul class="mt-6">
-                    <li class="relative px-6 py-3">
-                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    <li class="relative px-6 py-3 sidebar-btn">
+                        <span
+                            class="active-style absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="index.html">
+                        <a href="#"
+                            class="cursor-pointer inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 ">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -100,9 +118,13 @@
                             <span class="ml-4">Dashboard</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="cards.html">
+                    <li class="relative px-6 py-3 sidebar-btn">
+                        <span
+                            class="active-style absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                        <a href="#"
+                            class="cursor-pointer inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            id="mobileProductsButton">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -112,9 +134,13 @@
                             <span class="ml-4">Products</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="forms.html">
+                    <li class="relative px-6 py-3 sidebar-btn">
+                        <span
+                            class="active-style absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                        <a href="#"
+                            class="cursor-pointer inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            id="mobileFormDataButton">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -204,9 +230,10 @@
                                     @click.away="closeProfileMenu" @keydown.escape="closeProfileMenu"
                                     class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
                                     aria-label="submenu">
-                                    <li class="flex">
-                                        <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                            href="#">
+                                    <li class="flex" onclick="loadComponent('profile-settings')">
+                                        <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold
+                                        transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800
+                                        dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
                                             <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -218,7 +245,7 @@
                                             <span>Profile Settings</span>
                                         </a>
                                     </li>
-                                    <li class="flex">
+                                    <li class="flex" onclick="logout();">
                                         <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                                             href="#">
                                             <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
@@ -238,19 +265,84 @@
                 </div>
             </header>
             <main class="h-full overflow-y-auto">
-                <div class="container px-6 mx-auto grid">
-                    <?php include 'pages/dashboard.php'; ?>
-                    <?php include 'pages/view-order.php'; ?>
-                    <?php include 'pages/products.php'; ?>
-                    <?php include 'pages/edit-product.php'; ?>
-                    <?php include 'pages/form-data.php'; ?>
-                    <?php include 'pages/profile-settings.php'; ?>
-                    <?php include '404.php'; ?>
+                <div class="container px-6 mx-auto grid h-full w-full" id="content">
                 </div>
             </main>
         </div>
     </div>
-    <script src="assets/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to check if a cookie exists
+            function getCookie(name) {
+                let cookieArr = document.cookie.split(";");
+
+                for (let i = 0; i < cookieArr.length; i++) {
+                    let cookiePair = cookieArr[i].split("=");
+
+                    if (name === cookiePair[0].trim()) {
+                        return decodeURIComponent(cookiePair[1]);
+                    }
+                }
+
+                return null;
+            }
+
+            // Redirect to login.php if auth_ cookie does not exist
+            if (!getCookie('auth_')) {
+                window.location.href = 'login.php';
+            }
+
+            // Function to log out the user
+            window.logout = function () {
+                document.cookie = 'auth_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                window.location.href = 'login.php';
+            }
+            window.loadComponent = async function (component) {
+                // Add preloader
+                $('#content').html('<div class="h-full w-full flex justify-center items-center p-4"><span class="w-16 h-16 rounded-full border-8 border-gray-700 border-t-indigo-500 animate-spin"></span></div>');
+
+                try {
+                    const response = await fetch(`../api/api.php?action=get_admin_component&component=${component}`);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const data = await response.text();
+                    $('#content').html(data);
+                } catch (error) {
+                    $('#content').html(
+                        `<div class="h-full w-full flex justify-center items-center p-4"><span class="text-2xl text-white">Error: Loading Component: (${component})</span></div>`
+                    );
+                }
+            }
+
+            function setActiveButton(button) {
+                // Remove active classes from all buttons
+                $('.sidebar-btn').removeClass('active');
+                $('.active-style').addClass('hidden');
+                $('.sidebar-btn a').removeClass('text-white');
+
+                // Add active class to the clicked button
+                $(button).addClass('active');
+                $(button).find('.active-style').removeClass('hidden');
+                $(button).find('a').addClass('text-white');
+            }
+
+            $('.sidebar-btn').click(function () {
+                setActiveButton(this);
+
+                // Determine the component to load based on the clicked button
+                const component = $(this).find('a').text().trim().toLowerCase().replace(' ', '-');
+                loadComponent(component);
+            });
+            // Load default component on page load and set default active button
+            loadComponent('dashboard');
+            setActiveButton($('.sidebar-btn').first());
+        });
+
+    </script>
 </body>
 
 </html>

@@ -21,6 +21,17 @@ function handleAction($action, $conn)
                 echo json_encode(['error' => 'Order ID is missing']);
             }
             break;
+        case 'get_admin_component':
+            $componentName = $_GET['component'] ?? "404";
+            http_response_code(200);
+            echo include '../admin/components/' . $componentName . '.php';
+            break;
+        case 'do_admin_login':
+            $username = $_POST['username'] ?? "admin";
+            $password = $_POST['password'] ?? "Qw12er34ty5611$$";
+            http_response_code(200);
+            echo adminLogin($username, $password);
+            break;
         default:
             http_response_code(400);
             echo json_encode(['error' => 'Invalid action']);
