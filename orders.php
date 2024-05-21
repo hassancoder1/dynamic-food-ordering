@@ -134,7 +134,6 @@
             const now = moment();
             const date = moment(timestamp);
             const diff = now.diff(date, 'minutes');
-            console.log(diff);
             if (diff < 1) {
                 return 'Just now';
             } else if (diff < 60) {
@@ -150,7 +149,7 @@
             const request = objectStore.getAll();
 
             request.onsuccess = function (event) {
-                const orders = event.target.result.sort((a, b) => b.id - a.id); // Sort in descending order
+                const orders = event.target.result.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Sort in descending order
                 const orderHistoryList = $('.previous-orders .order-list ol');
                 const orderPreparingList = $('.order-status .order-list ol');
                 orderHistoryList.empty();
@@ -159,21 +158,22 @@
                 let customerName = '';
 
                 orders.forEach(order => {
-                    if (order.status === 'preparing' && !customerName) {
+                    if ((order.status === 'preparing' || order.status === 'pending') && !customerName) {
                         customerName = order.customerName;
                     }
-                    console.log(order);
                     let orderStatusStyle;
                     if (order.status === 'preparing') {
                         orderStatusStyle = 'warning';
                     } else if (order.status === 'delivered') {
                         orderStatusStyle = 'success';
-                    } else if (order.status === 'failed') {
+                    } else if (order.status === 'canceled') {
+                        orderStatusStyle = 'danger';
+                    } else if (order.status === 'not available') {
                         orderStatusStyle = 'danger';
                     } else if (order.status === 'pending') {
-                        orderStatusStyle = 'secondary';
-                    } else {
                         orderStatusStyle = 'primary';
+                    } else {
+                        orderStatusStyle = 'secondary';
                     }
 
                     const orderItemsHTML = order.items.map(item => `
@@ -189,7 +189,7 @@
                     const orderHTML = `
                     <li class="list-group-item">
                         <div>
-                            <h5 class="fw-semibold text-white">Order #${order.id} - ${formatDate(order.date)}</h5>
+                            <h5 class="fw-semibold text-white">Order #${order.id} - ${formatDate(order.timestamp)}</h5>
                             <ul class="list-unstyled order-items-list">
                                 ${orderItemsHTML}
                             </ul>
@@ -199,13 +199,14 @@
                                 <span class="text-warning fs-5 fw-bold">${order.items[0].currency}${order.total}</span> || 
                                 <span class="fw-semibold text-white">Order Status: </span>
                                 <span style="font-size:13px;" class="text-capitalize badge rounded-pill text-bg-${orderStatusStyle}">${order.status}</span> || <span class="fw-semibold text-white">Screen Number: ${order.screenNumber}</span> || <span class="fw-semibold text-white">Seat Number: ${order.seatNumber}</span>
+                                ${order.status === 'pending' ? `<button class="btn btn-sm btn-danger" onclick="cancelOrder('${order.id}','${order.status}')">&times; Cancel Order</button>` : ''}
                             </div>
                             </div>
                         </div>
                     </li>
                         `;
 
-                    if (order.status === 'preparing') {
+                    if (order.status === 'preparing' || order.status == 'pending') {
                         orderPreparingList.append(orderHTML);
                     } else {
                         if (!customerName && order.customerName) {
@@ -223,7 +224,7 @@
             };
         }
 
-        function updateOrderStatus(orderId, updatedStatus) {
+        window.updateOrderStatus = function (orderId, updatedStatus) {
             const transaction = db.transaction(["order_history"], "readwrite");
             const objectStore = transaction.objectStore("order_history");
             const getRequest = objectStore.get(orderId);
@@ -280,6 +281,20 @@
             };
         }
     });
+    window.cancelOrder = function (orderId, orderStatus) {
+        $.ajax({
+            url: `api/api.php?action=cancel_order&order_id=${orderId}`, // Your API endpoint
+            method: 'GET',
+            success: function (response) {
+                if (response.status && response.status !== orderStatus) {
+                    updateOrderStatus(orderId, response.status);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching order status:', error);
+            }
+        });
+    }
 </script>
 </body>
 

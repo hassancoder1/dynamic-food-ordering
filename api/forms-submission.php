@@ -1,5 +1,7 @@
 <?php
 include '../functions.php';
+$authFilePath = 'auth.json';
+
 function handleContactForm($data)
 {
     // Encrypt the email and message (You'll need to implement your own encryption function)
@@ -28,6 +30,34 @@ function handleContactForm($data)
     }
 }
 
+function handleLoginForm($data)
+{
+    global $authFilePath;
+    $username = sanitize($data['username']);
+    $password = sanitize($data['password']);
+
+    // Read existing data from JSON file
+    $user = readJsonFile($authFilePath);
+
+    // Debug step: Check the contents of the JSON file
+    // echo json_encode($user); exit;
+
+    // Check if the username exists and verify the password
+    if ($user && isset($user['username']) && $user['username'] === $username && password_verify($password, $user['password'])) {
+        // Return success response if credentials are correct
+        return json_encode([
+            'status' => 'success',
+            'msg' => 'Login successful!'
+        ]);
+    } else {
+        // Return failure response if credentials are incorrect
+        return json_encode([
+            'status' => 'failed',
+            'msg' => 'Invalid username or password!'
+        ]);
+    }
+}
+
 // Main script
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postData = $_POST;
@@ -37,6 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($formType === 'contactform') {
         $response = handleContactForm($postData);
+    } elseif ($formType === 'loginform') {
+        $response = handleLoginForm($postData);
     } else {
         $response = json_encode(['msg' => 'Invalid formtype']);
     }

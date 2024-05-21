@@ -45,9 +45,12 @@ function createOrdersTable($conn)
     $createTableSQL = "CREATE TABLE IF NOT EXISTS orders (
         id INT AUTO_INCREMENT PRIMARY KEY,
         order_id VARCHAR(36),
-        order_data TEXT NOT NULL,
+        customer_name VARCHAR(255) NOT NULL,
+        screen_number VARCHAR(50) NOT NULL,
+        seat_number VARCHAR(50) NOT NULL,
         total DECIMAL(10, 2) NOT NULL,
         order_status VARCHAR(20) DEFAULT 'pending',
+        order_data TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
 
@@ -59,6 +62,7 @@ function createOrdersTable($conn)
     }
     return true;
 }
+
 
 function createContactFromTable($conn)
 {
@@ -79,4 +83,17 @@ function createContactFromTable($conn)
     }
     return true;
 }
+
+// Function to read the JSON file
+function readJsonFile($filePath)
+{
+    if (!file_exists($filePath)) {
+        return [];
+    }
+    $jsonData = file_get_contents($filePath);
+    return json_decode($jsonData, true);
+}
+$data = readJsonFile('../api/auth.json');
+$auth = isset($data['auth']) ? $data['auth'] : null;
+
 ?>

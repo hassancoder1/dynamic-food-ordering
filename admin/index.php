@@ -300,12 +300,12 @@
                 document.cookie = 'auth_=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
                 window.location.href = 'login.php';
             }
-            window.loadComponent = async function (component) {
+            window.loadComponent = async function (component, value1 = '', value2 = '', value3 = '') {
                 // Add preloader
                 $('#content').html('<div class="h-full w-full flex justify-center items-center p-4"><span class="w-16 h-16 rounded-full border-8 border-gray-700 border-t-indigo-500 animate-spin"></span></div>');
 
                 try {
-                    const response = await fetch(`../api/api.php?action=get_admin_component&component=${component}`);
+                    const response = await fetch(`../api/api.php?action=get_admin_component&component=${component}&value1=${value1}&value2=${value2}&value3=${value3}`);
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }

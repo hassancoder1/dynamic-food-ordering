@@ -290,21 +290,17 @@
             };
         });
 
-        // Function to place order
         function placeOrder(cartItems, total, orderID, customerName, screenNumber, seatNumber) {
-            $.ajax({
-                url: 'api/place-order.php',
-                method: 'POST',
-                data: {
-                    orderID: orderID,
-                    cartItems: cartItems,
-                    total: total,
-                    customerName: customerName,
-                    screenNumber: screenNumber,
-                    seatNumber: seatNumber
-                },
-                dataType: 'json',
-                success: function (data) {
+            // Convert the cartItems array to JSON format
+            const cartItemsJSON = JSON.stringify(cartItems);
+
+            // Construct the URL with query parameters
+            const url = `api/api.php?action=place_new_order&orderID=${orderID}&total=${total}&customerName=${customerName}&screenNumber=${screenNumber}&seatNumber=${seatNumber}&cartItems=${encodeURIComponent(cartItemsJSON)}`;
+
+            // Send a GET request to the server
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
                     if (data.status === 'success') {
                         saveOrderHistory(cartItems, total, orderID);  // Save order history with order ID
                         clearCart();  // Clear the cart after placing the order
@@ -315,13 +311,14 @@
                         console.error('Error placing order:', data.msg);
                         alert("Error! Not enough information provided...");
                     }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error('Error placing order:', textStatus, errorThrown);
+                })
+                .catch(error => {
+                    console.error('Error placing order:', error);
                     alert("Error! Please Check Your Internet Connection...");
-                }
-            });
+                });
         }
+
+
 
         // Function to save order history with order ID
         function saveOrderHistory(cartItems, total, orderID) {

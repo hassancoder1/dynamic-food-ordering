@@ -1,0 +1,94 @@
+[
+  {
+    "total_orders": 12,
+    "total_earnings": "$353",
+    "total_sales": 23,
+    "total_pending_orders": 33,
+    "orders": {
+      "0": {
+        "customer_name": "Hassan Ali",
+        "order_id": "2345d34f34wdf",
+        "screen_number": "screen 1",
+        "seat_number": 32,
+        "order_status": "pending",
+        "timestamp": "2024-05-21t06:56Z",
+        "quantity_per_order": 8,
+        "total": 343,
+        "items": {
+          "0": {
+            "currency": "$",
+            "item_id": "d90c6fde2b",
+            "item_img": "/image/item.png",
+            "item_name": "Item Title Goes here",
+            "price": 12,
+            "item_quantity": 3
+          },
+          "1": {
+            "currency": "$",
+            "item_id": "d90c6fde2b",
+            "item_img": "/image/item.png",
+            "item_name": "Item Title Goes here",
+            "price": 12,
+            "item_quantity": 3
+          }
+        }
+      },
+      "1": {
+        "customer_name": "Hassan Ali",
+        "order_id": "2345d34f34wdf",
+        "screen_number": "screen 1",
+        "seat_number": 32,
+        "order_status": "pending",
+        "timestamp": "2024-05-21t06:56Z",
+        "quantity_per_order": 8,
+        "total": 343,
+        "items": {
+          "0": {
+            "currency": "$",
+            "item_id": "d90c6fde2b",
+            "item_img": "/image/item.png",
+            "item_name": "Item Title Goes here",
+            "price": 12,
+            "item_quantity": 3
+          }
+        }
+      },
+      "2": {
+        "customer_name": "Hassan Ali",
+        "order_id": "2345d34f34wdf",
+        "screen_number": "screen 1",
+        "seat_number": 32,
+        "order_status": "pending",
+        "timestamp": "2024-05-21t06:56Z",
+        "quantity_per_order": 8,
+        "total": 343,
+        "items": {
+          "0": {
+            "currency": "$",
+            "item_id": "d90c6fde2b",
+            "item_img": "/image/item.png",
+            "item_name": "Item Title Goes here",
+            "price": 12,
+            "item_quantity": 3
+          },
+          "1": {
+            "currency": "$",
+            "item_id": "d90c6fde2b",
+            "item_img": "/image/item.png",
+            "item_name": "Item Title Goes here",
+            "price": 12,
+            "item_quantity": 3
+          },
+          "2": {
+            "currency": "$",
+            "item_id": "d90c6fde2b",
+            "item_img": "/image/item.png",
+            "item_name": "Item Title Goes here",
+            "price": 12,
+            "item_quantity": 3
+          }
+        }
+      }
+    }
+  }
+]
